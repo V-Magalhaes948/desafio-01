@@ -1,0 +1,16 @@
+{
+    "name": "vinicius/laravel",
+    "description": "desafio-appstorm",
+    "type": "project",
+    "require": {
+        "laravel/laravel": "^9.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vinicius Magalhães",
+            "email": "vinimedfilho@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
