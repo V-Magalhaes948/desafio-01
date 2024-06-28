@@ -7,7 +7,7 @@ services:
       - "8000:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/snippets/fastcgi-php.conf:/etc/nginx/snippets/fastcgi-php.conf
+      # - ./nginx/snippets/fastcgi-php.conf:/etc/nginx/snippets/fastcgi-php.conf
       - ./laravel:/var/www/html
     depends_on:
       - php
@@ -21,15 +21,31 @@ services:
     depends_on:
       - mysql
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8080:80"
+    depends_on: 
+      - mysql
+
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: example_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"  # Mapeia a porta 3306 do contêiner para a porta 3306 do host
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
 
   redis:
     image: redis:latest
