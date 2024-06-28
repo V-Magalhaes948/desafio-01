@@ -38,14 +38,15 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: example_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user_password
+      MYSQL_DATABASE: desafio-appstorm
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root_password
     ports:
       - "3306:3306"  # Mapeia a porta 3306 do contêiner para a porta 3306 do host
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./mysql/config/my.cnf:/etc/mysql/my.cnf:ro
+      - ./mysql/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
 
   redis:
     image: redis:latest
