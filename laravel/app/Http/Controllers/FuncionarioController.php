@@ -10,6 +10,8 @@ class FuncionarioController extends Controller
 {
     public function create()
     {
+        $a = DB::table('funcionario')->get()->toJson();
+        dump($a);
         return view('funcionario.cadastro');
     }
 
@@ -22,7 +24,7 @@ class FuncionarioController extends Controller
             'salario' => 'required|numeric|min:0',
         ]);
 
-        $sql = "INSERT INTO funcionarios (nome, cargo, salario, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO funcionario (nome, cargo, salario, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
 
         DB::insert($sql, [
             $request->nome,
@@ -36,20 +38,28 @@ class FuncionarioController extends Controller
         return redirect()->route('funcionario.create')->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
-    public function index($id)
+    public function index(Request $request)
     {
-        // Query SQL para buscar um funcionário por ID
-        $sql = "SELECT * FROM funcionarios WHERE id = ?";
-        
-        // Execução da query utilizando o Query Builder do Laravel
-        $funcionario = DB::select($sql, [$id]);
-
-        // Verifica se encontrou algum funcionário
-        if (empty($funcionario)) {
-            return response()->json(['error' => 'Funcionário não encontrado'], 404);
+        if ($request->ajax()) {
+            $sql = "SELECT * FROM funcionario";
+            $funcionarios = DB::select($sql);
+            return response()->json($funcionarios);
         }
 
-        return response()->json($funcionario[0]);
+        return view('funcionario.index');
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $sql = "SELECT * FROM funcionario WHERE id = ?";
+
+        $funcionario = DB::select($sql, [
+            $id
+        ]);
+
+        return view('funcionario.edit', [
+            'funcionario' => $funcionario[0]
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -62,7 +72,7 @@ class FuncionarioController extends Controller
         ]);
 
         // Query SQL para atualizar os dados do funcionário
-        $sql = "UPDATE funcionarios SET nome = ?, cargo = ?, salario = ?, updated_at = ? WHERE id = ?";
+        $sql = "UPDATE funcionario SET nome = ?, cargo = ?, salario = ?, updated_at = ? WHERE id = ?";
         
         // Execução da query utilizando o Query Builder do Laravel
         DB::update($sql, [

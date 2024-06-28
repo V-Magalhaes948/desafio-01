@@ -19,13 +19,14 @@ Route::get('/', function () {
 });
 
 
+Route::get('/funcionario', [FuncionarioController::class, 'index'])->name('funcionario.index');
 
 Route::get('/funcionario/cadastro', [FuncionarioController::class, 'create'])->name('funcionario.create');
 
 Route::post('/funcionario', [FuncionarioController::class, 'store'])->name('funcionario.store');
 
-Route::get('/funcionarios/{id}', [FuncionarioController::class, 'index'])->name('funcionario.show');
+Route::get('/funcionario/{id}/edit', [FuncionarioController::class, 'edit'])->name('funcionario.edit');
 
-Route::post('/funcionarios/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
+Route::put('/funcionario/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
 
 Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');
