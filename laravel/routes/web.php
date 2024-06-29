@@ -29,4 +29,4 @@ Route::get('/funcionario/{id}/edit', [FuncionarioController::class, 'edit'])->na
 
 Route::put('/funcionario/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
 
-Route::delete('/funcionarios/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');
+Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');

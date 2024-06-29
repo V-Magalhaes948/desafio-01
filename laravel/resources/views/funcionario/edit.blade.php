@@ -9,11 +9,12 @@
     <!-- Formulário de Cadastro de Funcionário -->
 <form action="{{ route('funcionario.update', $funcionario->id) }}" method="post">
     @csrf
+    @method('PUT') <!-- Adiciona o método PUT para o formulário -->
     <input type="text" name="nome" placeholder="Nome" value="{{ $funcionario->nome }}"><br>
-    <input type="text" name="cargo" placeholder="Cargo"><br>
-    <input type="number" name="salario" placeholder="Salário"><br>
+    <input type="text" name="cargo" placeholder="Cargo" value="{{ $funcionario->cargo }}"><br>
+    <input type="number" name="salario" placeholder="Salário" value="{{ $funcionario->salario }}"><br>
     <button type="submit">Atualizar Funcionário</button>
 </form>
-@dump($funcionario)
+    @dump($funcionario)
 </body>
 </html>

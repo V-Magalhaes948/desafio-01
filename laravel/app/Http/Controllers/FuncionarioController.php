@@ -57,6 +57,7 @@ class FuncionarioController extends Controller
             $id
         ]);
 
+
         return view('funcionario.edit', [
             'funcionario' => $funcionario[0]
         ]);
@@ -74,7 +75,6 @@ class FuncionarioController extends Controller
         // Query SQL para atualizar os dados do funcionário
         $sql = "UPDATE funcionario SET nome = ?, cargo = ?, salario = ?, updated_at = ? WHERE id = ?";
         
-        // Execução da query utilizando o Query Builder do Laravel
         DB::update($sql, [
             $request->nome,
             $request->cargo,
@@ -84,19 +84,18 @@ class FuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
-        return redirect()->route('funcionario.show', ['id' => $id])->with('success', 'Funcionário atualizado com sucesso!');
+        return redirect()->route('funcionario.edit', ['id' => $id])->with('success', 'Funcionário atualizado com sucesso!');
     }
 
     public function destroy($id)
     {
-        // Query SQL para excluir um funcionário
-        $sql = "DELETE FROM funcionarios WHERE id = ?";
+        $sql = "DELETE FROM funcionario WHERE id = ?";
         
-        // Execução da query utilizando o Query Builder do Laravel
         DB::delete($sql, [$id]);
 
-        // Redireciona de volta para a lista de funcionários ou retorna uma mensagem de sucesso
-        return redirect()->route('funcionario.index')->with('success', 'Funcionário excluído com sucesso!');
+        return response()->json([
+            'menssage' => 'Funcionário excluído com sucesso!'. $id
+        ]);
     }
 }
 
