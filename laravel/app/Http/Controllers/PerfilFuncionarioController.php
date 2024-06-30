@@ -18,7 +18,7 @@ class PerfilFuncionarioController extends Controller
         // if(!$funcionario) {
         //     return redirect()->back()->withErrors('Funcionário não encontrado.');
         // }
-        return view('perfilfuncionario.create', [
+        return view('perfilFuncionario.create', [
             'funcionarioId' => $funcionarioId
         ]);
     }
@@ -109,7 +109,7 @@ class PerfilFuncionarioController extends Controller
             ->with('error', 'Erro de validação: Funcionário não existe');
         }
         
-        return view('perfilfuncionario.edit', [
+        return view('perfilFuncionario.edit', [
             'funcionarioPerfil' => $perfilDoFuncionario[0],
             'funcionarioId' => $funcionarioId
         ]);
@@ -124,7 +124,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('funcionarioPerfil.edit', $funcionarioId)
+            return redirect()->route('perfilFuncionario.edit', $funcionarioId)
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
 
@@ -139,7 +139,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
-        return redirect()->route('funcionarioPerfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
+        return redirect()->route('perfilFuncionario.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
     }
     public function destroy($funcionarioId)
     {
