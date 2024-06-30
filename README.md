@@ -73,6 +73,12 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
     ```bash
     php artisan migrate
     ```
+8. **Permissionamento da pasta log:**
+
+    ```bash
+    chown -R www-data:www-data storage/logs && chmod -R 777 storage
+    ```
+
 ## Acessos
 
 - **Aplicação:** [http://localhost:8000](http://localhost:8000)
