@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FuncionarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/funcionario', [FuncionarioController::class, 'index'])->name('funcionario.index');
+
+Route::get('/funcionario/cadastro', [FuncionarioController::class, 'create'])->name('funcionario.create');
+
+Route::post('/funcionario', [FuncionarioController::class, 'store'])->name('funcionario.store');
+
+Route::get('/funcionario/{id}/edit', [FuncionarioController::class, 'edit'])->name('funcionario.edit');
+
+Route::put('/funcionario/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
+
+Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');

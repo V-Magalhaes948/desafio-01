@@ -17,6 +17,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Define o diretório de trabalho dentro do container
 WORKDIR /var/www/html
 
+RUN docker-php-ext-install pdo_mysql
+
 # Copia os arquivos do projeto Laravel para dentro do container
 COPY ./laravel /var/www/html
 
