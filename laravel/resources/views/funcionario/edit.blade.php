@@ -1,6 +1,11 @@
 @include('funcionario.header')
 
     <!-- Formulário de Cadastro de Funcionário -->
+    @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
 <form action="{{ route('funcionario.update', $funcionario->id) }}" method="post">
     @csrf
     @method('PUT') <!-- Adiciona o método PUT para o formulário -->

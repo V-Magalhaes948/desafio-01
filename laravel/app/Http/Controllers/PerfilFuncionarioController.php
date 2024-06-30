@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Funcionario;
 use Illuminate\Support\Facades\DB;
 use App\Models\PerfilFuncionario;
+use Illuminate\Support\Facades\Validator;
 
 class PerfilFuncionarioController extends Controller
 {
@@ -25,22 +26,26 @@ class PerfilFuncionarioController extends Controller
 
     public function store(Request $request, $funcionarioId)
     {
-        // Validação dos dados do formulário
-        $request->validate([
-            // 'funcionarioId' => 'required|exists:funcionario,id',
-            'idade' => 'required|integer',
-            'endereco' => 'nullable|string|max:255',
-            'telefone' => 'required|string|max:20',
-            
+        $query = "SELECT id FROM funcionario WHERE id = ?";
+        
+        $validaFuncionario = DB::select($query, [$funcionarioId]);
+
+        if (!$validaFuncionario) {
+            return redirect()->route('funcionarioperfil.create', $funcionarioId)
+            ->with('message', 'Erro de validação: Funcionário não existe');
+
+        }
+        $validator = Validator::make($request->all(), [
+            'idade' => 'required|integer|min:1',
+            'endereco' => 'required|string|max:120',
+            'telefone' => 'required|string|min:1',
         ]);
 
-        // $funcionario = Funcionario::find($request->funcionarioId);
-        // if (!$funcionario) {
-        //     // Redirecionamento ou resposta de erro se o funcionário não existir
-        //     return redirect()->back()->withErrors('Funcionário não encontrado.');
-        // }
+        if ($validator->fails()) {
+            return redirect()->route('funcionarioperfil.create', $funcionarioId)
+            ->with('error', 'Erro de validação: Preencha os campos de forma correta');
+        }
         
-
         $sql = "INSERT INTO perfil_funcionario (funcionario_id, idade, endereco, telefone, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
 
         DB::insert($sql, [
@@ -53,7 +58,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para o formulário com uma mensagem de sucesso
-        return redirect()->route('funcionarioperfil.create', $funcionarioId)
+        return redirect()->route('funcionarioperfil.show', $funcionarioId)
                 ->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
@@ -85,25 +90,13 @@ class PerfilFuncionarioController extends Controller
             }
         }    
 
-        // if ($confirmaPerfilFuncionario) {
-        //     return response()->json([
-        //         'message:' => 'Perfil do funcionário já existe!'
-        //     ], $confirmaPerfilFuncionario);
-        // } else {
-        //     return response()->json([
-        //         'message:' => 'Perfil do funcionário não existe!'
-        //     ]);
-        // }
-        // Verifica se perfil_funcionario já existe para o id que recebeu, se existir o perfil mostrar a tabela
-        // Colocar um link para editar um perfil na tabela, criando um método update
-        // Se não existir libera um link para cadastrar um novo perfil_funcionario
-
         return view('perfilfuncionario.show', [
             'funcionarioId' => $funcionarioId   
         ]);
     }
 
-    public function edit(Request $request, $funcionarioId) {
+    public function edit(Request $request, $funcionarioId) 
+    {
         
         $sql = "SELECT * FROM perfil_funcionario WHERE funcionario_id = ?";
 
@@ -111,27 +104,30 @@ class PerfilFuncionarioController extends Controller
             $funcionarioId  
         ]);
 
-
+        if (!$perfilDoFuncionario) {
+            return redirect()->route('funcionario.index', $funcionarioId)
+            ->with('error', 'Erro de validação: Funcionário não existe');
+        }
+        
         return view('perfilfuncionario.edit', [
             'funcionarioPerfil' => $perfilDoFuncionario[0],
             'funcionarioId' => $funcionarioId
         ]);
     }
 
-    public function update(Request $request, $funcionarioId) {
-        $request->validate([
-            'idade' => 'required|integer|max:2',
-            'endereco' => 'required|string|max:255',
-            'telefone' => 'required|string|min:0',
+    public function update(Request $request, $funcionarioId) 
+    {
+        $validator = Validator::make($request->all(), [
+            'idade' => 'required|integer|min:1',
+            'endereco' => 'required|string|max:120',
+            'telefone' => 'required|string|min:1',
         ]);
 
-        // $perfil = PerfilFuncionario::where('funcionario_id', $funcionarioId)->first();
+        if ($validator->fails()) {
+            return redirect()->route('funcionarioperfil.edit', $funcionarioId)
+            ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
+        }
 
-        // if (!$perfil) {
-        //     return redirect()->route('perfilfuncionario.show', ['funcionario_id' => $funcionarioId])->with('error', 'Perfil do funcionário não encontrado.');
-        // }
-
-        // Query SQL para atualizar os dados do funcionário
         $sql = "UPDATE perfil_funcionario SET idade = ?, endereco = ?, telefone = ?, updated_at = ? WHERE funcionario_id = ?";
         
         DB::update($sql, [
@@ -143,7 +139,17 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
-        return redirect()->route('perfilfuncionario.show', ['funcionarioId' => $funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
+        return redirect()->route('funcionarioperfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
+    }
+    public function destroy($funcionarioId)
+    {
+        $sql = "DELETE FROM perfil_funcionario WHERE funcionario_id = ?";
+        
+        DB::delete($sql, [$funcionarioId]);
+
+        return response()->json([
+            'menssage' => 'Perfil do funcionário excluído com sucesso!'. $funcionarioId
+        ]);
     }
 
 }

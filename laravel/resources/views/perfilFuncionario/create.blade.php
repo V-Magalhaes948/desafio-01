@@ -8,4 +8,19 @@
     <button type="submit">Criar Perfil</button>
 </form>
 
+@if (session('message'))
+    <div class="alert alert-danger">
+        {{ session('message') }}
+    </div>
+@endif
+
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
+
+
 @include('funcionario.footer')

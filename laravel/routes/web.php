@@ -26,9 +26,11 @@ Route::get('/funcionarioperfil/{id}/cadastro', [PerfilFuncionarioController::cla
 
 Route::post('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'store'])->name('funcionarioperfil.store');
 
-Route::get('/funcionarioperfil/{funcionarioId}', [PerfilFuncionarioController::class, 'show'])->name('funcionarioperfil.show');
+Route::get('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'show'])->name('funcionarioperfil.show');
 
 Route::get('/funcionarioperfil/{id}/edit', [PerfilFuncionarioController::class, 'edit'])->name('funcionarioperfil.edit');
 
 Route::put('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'update'])->name('funcionarioperfil.update');
+
+Route::delete('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'destroy'])->name('funcionarioperfil.destroy');
 

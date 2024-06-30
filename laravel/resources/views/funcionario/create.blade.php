@@ -39,7 +39,12 @@
                         window.location.href = '{{ route("funcionario.index") }}?success=' + response.message;
                     },
                     error: function(response) {
-                        var errorHtml = '<div class="alert alert-danger">Aviso: Algum campo não foi preenchido corretamente.</div>';
+                        var errorHtml;
+                        if (response.status === 422) {
+                            errorHtml = '<div class="alert alert-danger">Erro de validação: preencha todos os campos corretamente.</div>';
+                        } else if (response.status === 500) {
+                            errorHtml = '<div class="alert alert-danger">Erro no servidor: tente novamente mais tarde.</div>';
+                        }
                         $('#message').html(errorHtml);
                     }
                 });

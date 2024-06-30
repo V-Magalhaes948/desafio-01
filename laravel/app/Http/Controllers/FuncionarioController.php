@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Funcionario;
+use Illuminate\Support\Facades\Validator;
 
 class FuncionarioController extends Controller
 {
@@ -60,6 +61,10 @@ class FuncionarioController extends Controller
             $id
         ]);
 
+        if (!$funcionario) {
+            return redirect()->route('funcionario.index', $id)
+            ->with('error', 'Erro de validação: Funcionário não existe');
+        }
 
         return view('funcionario.edit', [
             'funcionario' => $funcionario[0]
@@ -69,11 +74,16 @@ class FuncionarioController extends Controller
     public function update(Request $request, $id)
     {
         // Validação dos dados do formulário
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'salario' => 'required|numeric|min:0',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('funcionario.edit', $id)
+            ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
+        }
 
         // Query SQL para atualizar os dados do funcionário
         $sql = "UPDATE funcionario SET nome = ?, cargo = ?, salario = ?, updated_at = ? WHERE id = ?";
@@ -87,17 +97,21 @@ class FuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
-        return redirect()->route('funcionario.edit', ['id' => $id])->with('success', 'Funcionário atualizado com sucesso!');
+        return redirect()->route('funcionario.index', ['id' => $id])->with('success', 'Funcionário atualizado com sucesso!');
     }
 
     public function destroy($id)
     {
+        $sql = "DELETE FROM perfil_funcionario WHERE funcionario_id = ?";
+
+        DB::delete($sql, [$id]);
+
         $sql = "DELETE FROM funcionario WHERE id = ?";
         
         DB::delete($sql, [$id]);
 
         return response()->json([
-            'menssage' => 'Funcionário excluído com sucesso!'. $id
+            'menssage' => 'Funcionário e Perfil excluídos com sucesso!'. $id
         ]);
     }
 }

@@ -4,6 +4,12 @@
         <a href="{{ route('funcionario.create') }}">CADASTRAR FUNCIONÁRIO</a>
     </div>
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <table id="listagem">
         <thead>
             <tr>
