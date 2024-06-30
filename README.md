@@ -43,7 +43,6 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
 
     ```bash
     cp .env.example .env
-    php artisan key:generate
     ```
 
     Em seguida, edite o arquivo `.env` para configurar as variáveis de ambiente, especialmente a conexão com o banco de dados:
@@ -68,3 +67,12 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
     ```bash
     php artisan migrate
     ```
+## Acessos
+
+- **Aplicação:** [http://localhost:8000](http://localhost:8000)
+- **Banco de Dados:** [http://localhost:8080](http://localhost:8080)
+
+## Contato
+
+- **Autor:** Vinicius Magalhães
+- **Email:** vinimedfilho@gmail.com
