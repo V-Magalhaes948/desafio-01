@@ -1,10 +1,20 @@
+# Projeto Laravel - Gerenciamento de Funcionários
+
+Este é um projeto Laravel para gerenciamento de funcionários, incluindo o cadastro, edição, visualização e exclusão de funcionários, bem como a criação e atualização de perfis de funcionários.
+
+## Requisitos
+
+- Docker
+- Docker Compose
+- Composer
+
 ## Instalação
 
 1. **Clone o repositório:**
 
     ```bash
-    git clone <URL-do-repositório>
-    cd my_project
+    git clone https://github.com/V-Magalhaes948/desafio-01.git
+    cd desafio-01
     ```
 
 2. **Configure o ambiente Docker:**
@@ -29,14 +39,31 @@
 
 5. **Configuração do Laravel:**
 
-    Copie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente, especialmente a conexão com o banco de dados:
+    Copie o arquivo `.env.example` para `.env`:
 
     ```bash
     cp .env.example .env
     php artisan key:generate
     ```
 
-6. **Execute as migrações do banco de dados:**
+    Em seguida, edite o arquivo `.env` para configurar as variáveis de ambiente, especialmente a conexão com o banco de dados:
+
+    ```dotenv
+    DB_HOST=mysql
+    DB_DATABASE=desafio-appstorm
+    DB_USERNAME=root
+    DB_PASSWORD=root_password
+    ```
+
+6. **Configuração da chave de aplicação:**
+
+    Gere a chave da aplicação:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+7. **Execute as migrações do banco de dados:**
 
     ```bash
     php artisan migrate
