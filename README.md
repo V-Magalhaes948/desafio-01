@@ -1,6 +1,6 @@
-# Projeto Laravel - Gerenciamento de Funcionários
+# Projeto Laravel - Gerenciamento de Funcionários - DESAFIO 01
 
-Este é um projeto Laravel para gerenciamento de funcionários, incluindo o cadastro, edição, visualização e exclusão de funcionários, bem como a criação e atualização de perfis de funcionários.
+Este é um projeto Laravel que considerei um grande desafio para mim. Consiste em um gerenciamento de funcionários, incluindo o cadastro, edição, visualização e exclusão de funcionários, bem como a criação e atualização de perfis de funcionários.
 
 ## Requisitos
 
@@ -51,8 +51,8 @@ Este é um projeto Laravel para gerenciamento de funcionários, incluindo o cada
     ```dotenv
     DB_HOST=mysql
     DB_DATABASE=desafio-appstorm
-    DB_USERNAME=root
-    DB_PASSWORD=root_password
+    DB_USERNAME=root2
+    DB_PASSWORD=root_password2
     ```
 
 6. **Configuração da chave de aplicação:**

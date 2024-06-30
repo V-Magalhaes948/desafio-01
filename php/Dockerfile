@@ -30,6 +30,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+RUN chown -R www-data:www-data storage/logs \
+    && chmod -R 775 storage    
+
 # Expondo a porta 9000 para conexões do PHP-FPM
 EXPOSE 9000
 

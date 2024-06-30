@@ -39,8 +39,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: desafio-appstorm
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root_password
+      MYSQL_USER: root2
+      MYSQL_PASSWORD: root_password2
     ports:
       - "3306:3306"  # Mapeia a porta 3306 do contêiner para a porta 3306 do host
     volumes:
