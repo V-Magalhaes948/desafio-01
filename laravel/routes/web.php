@@ -5,12 +5,8 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\PerfilFuncionarioController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-
-Route::get('/funcionario', [FuncionarioController::class, 'index'])->name('funcionario.index');
+Route::get('/', [FuncionarioController::class, 'index'])->name('funcionario.index');
 
 Route::get('/funcionario/cadastro', [FuncionarioController::class, 'create'])->name('funcionario.create');
 
