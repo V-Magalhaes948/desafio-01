@@ -14,6 +14,8 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
 
     ```bash
     git clone https://github.com/V-Magalhaes948/desafio-01.git
+    ```
+    ```bash
     cd desafio-01
     ```
 
@@ -33,7 +35,10 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
 
     ```bash
     docker-compose exec php bash
+    ```bash
     cd /var/www/html
+    ```
+    ```bash
     composer install
     ```
 
