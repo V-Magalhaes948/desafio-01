@@ -2,17 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\PerfilFuncionarioController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,3 +21,14 @@ Route::get('/funcionario/{id}/edit', [FuncionarioController::class, 'edit'])->na
 Route::put('/funcionario/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
 
 Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');
+
+Route::get('/funcionarioperfil/{id}/cadastro', [PerfilFuncionarioController::class, 'create'])->name('funcionarioperfil.create');
+
+Route::post('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'store'])->name('funcionarioperfil.store');
+
+Route::get('/funcionarioperfil/{funcionarioId}', [PerfilFuncionarioController::class, 'show'])->name('funcionarioperfil.show');
+
+Route::get('/funcionarioperfil/{id}/edit', [PerfilFuncionarioController::class, 'edit'])->name('funcionarioperfil.edit');
+
+Route::put('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'update'])->name('funcionarioperfil.update');
+

@@ -10,33 +10,36 @@ class FuncionarioController extends Controller
 {
     public function create()
     {
-        $a = DB::table('funcionario')->get()->toJson();
-        dump($a);
-        return view('funcionario.cadastro');
+        // $a = DB::table('funcionario')->get()->toJson();
+        // dump($a);
+        return view('funcionario.create');
     }
 
     public function store(Request $request)
     {
-        // Validação dos dados do formulário
-        $request->validate([
+        $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'salario' => 'required|numeric|min:0',
         ]);
 
-        $sql = "INSERT INTO funcionario (nome, cargo, salario, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
+        try {
+            $sql = "INSERT INTO funcionario (nome, cargo, salario, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
 
-        DB::insert($sql, [
-            $request->nome,
-            $request->cargo,
-            $request->salario,
-            now(),
-            now(),
-        ]);
+            DB::insert($sql, [
+                $request->nome,
+                $request->cargo,
+                $request->salario,
+                now(),
+                now(),
+            ]);
 
-        // Redireciona de volta para o formulário com uma mensagem de sucesso
-        return redirect()->route('funcionario.create')->with('success', 'Funcionário cadastrado com sucesso!');
+            return redirect()->route('funcionario.index')->with('success', 'Funcionário cadastrado com sucesso!');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao cadastrar o funcionário!'], 500);
+        }
     }
+
 
     public function index(Request $request)
     {

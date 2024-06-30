@@ -1,5 +1,9 @@
 @include('funcionario.header')
 
+    <div>
+        <a href="{{ route('funcionario.create') }}">CADASTRAR FUNCIONÁRIO</a>
+    </div>
+
     <table id="listagem">
         <thead>
             <tr>
@@ -11,7 +15,7 @@
         </thead>
         <tbody></tbody>
     </table>
-    <button class="delete">TESTE</button>
+
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -39,14 +43,17 @@
                         // Adiciona cada linha na tabela
                         $.each(response, function(index, item) {
                             let urlEdit = "{{ route("funcionario.edit", "xx") }}";
-                            let newStr = urlEdit.replace("xx", item.id);
+                            let urlShowPerfil = "{{ route("funcionarioperfil.show", "xx") }}";
+                            let pageEdit = urlEdit.replace("xx", item.id);
+                            let pageShowPerfil = urlShowPerfil.replace("xx", item.id);
                             tbody.append(`
                                 <tr>
                                     <td>${item.id}</td>
                                     <td>${item.nome}</td>
                                     <td>${item.cargo}</td>
                                     <td>${item.salario}</td>
-                                    <td><a href="${newStr}">EDITAR</a></td>
+                                    <td><a href="${pageShowPerfil}">PERFIL</a></td>
+                                    <td><a href="${pageEdit}">EDITAR</a></td>
                                     <td><a class="delete" data-id="${item.id}">EXCLUIR</a></td>
                                 </tr>
                             `);
