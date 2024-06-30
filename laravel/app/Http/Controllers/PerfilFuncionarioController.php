@@ -124,7 +124,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('perfilFuncionario.edit', $funcionarioId)
+            return redirect()->route('funcionarioperfil.edit', $funcionarioId)
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
 
