@@ -35,6 +35,7 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
 
     ```bash
     docker-compose exec php bash
+    ```
     ```bash
     cd /var/www/html
     ```
