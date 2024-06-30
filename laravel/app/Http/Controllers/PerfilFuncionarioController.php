@@ -31,7 +31,7 @@ class PerfilFuncionarioController extends Controller
         $validaFuncionario = DB::select($query, [$funcionarioId]);
 
         if (!$validaFuncionario) {
-            return redirect()->route('funcionarioperfil.create', $funcionarioId)
+            return redirect()->route('funcionarioPerfil.create', $funcionarioId)
             ->with('message', 'Erro de validação: Funcionário não existe');
 
         }
@@ -42,7 +42,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('funcionarioperfil.create', $funcionarioId)
+            return redirect()->route('funcionarioPerfil.create', $funcionarioId)
             ->with('error', 'Erro de validação: Preencha os campos de forma correta');
         }
         
@@ -58,7 +58,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para o formulário com uma mensagem de sucesso
-        return redirect()->route('funcionarioperfil.show', $funcionarioId)
+        return redirect()->route('funcionarioPerfil.show', $funcionarioId)
                 ->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
@@ -90,7 +90,7 @@ class PerfilFuncionarioController extends Controller
             }
         }    
 
-        return view('perfilfuncionario.show', [
+        return view('perfilFuncionario.show', [
             'funcionarioId' => $funcionarioId   
         ]);
     }
@@ -124,7 +124,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('funcionarioperfil.edit', $funcionarioId)
+            return redirect()->route('funcionarioPerfil.edit', $funcionarioId)
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
 
@@ -139,7 +139,7 @@ class PerfilFuncionarioController extends Controller
         ]);
 
         // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
-        return redirect()->route('funcionarioperfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
+        return redirect()->route('funcionarioPerfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
     }
     public function destroy($funcionarioId)
     {
