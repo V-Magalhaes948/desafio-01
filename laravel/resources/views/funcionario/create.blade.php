@@ -36,7 +36,7 @@
                     data: $(this).serialize(),
                     success: function(response) {
                         // Redireciona para a página de listagem de funcionários com a mensagem de sucesso
-                        window.location.href = '{{ route("funcionario.index") }}?success=' + response.message;
+                        window.location.href = '{{ route("funcionario.index") }};
                     },
                     error: function(response) {
                         var errorHtml;
