@@ -45,7 +45,7 @@ Este é um projeto Laravel que considerei um grande desafio para mim. Consiste e
 
 5. **Configuração do Laravel:**
 
-    Copie o arquivo `.env.example` para `.env`:
+    Copie o arquivo `laravel/.env.example` para `laravel/.env`:
 
     ```bash
     cp .env.example .env
