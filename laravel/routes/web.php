@@ -6,27 +6,22 @@ use App\Http\Controllers\PerfilFuncionarioController;
 
 
 
-Route::get('/', [FuncionarioController::class, 'index'])->name('funcionario.index');
+Route::prefix('funcionario')->name('funcionario.')->group(function () {
+    Route::get('/', [FuncionarioController::class, 'index'])->name('index');
+    Route::get('/cadastro', [FuncionarioController::class, 'create'])->name('create');
+    Route::post('/', [FuncionarioController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [FuncionarioController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [FuncionarioController::class, 'update'])->name('update');
+    Route::delete('/{id}', [FuncionarioController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/funcionario/cadastro', [FuncionarioController::class, 'create'])->name('funcionario.create');
 
-Route::post('/funcionario', [FuncionarioController::class, 'store'])->name('funcionario.store');
-
-Route::get('/funcionario/{id}/edit', [FuncionarioController::class, 'edit'])->name('funcionario.edit');
-
-Route::put('/funcionario/{id}', [FuncionarioController::class, 'update'])->name('funcionario.update');
-
-Route::delete('/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('funcionario.destroy');
-
-Route::get('/funcionarioperfil/{id}/cadastro', [PerfilFuncionarioController::class, 'create'])->name('funcionarioperfil.create');
-
-Route::post('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'store'])->name('funcionarioperfil.store');
-
-Route::get('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'show'])->name('funcionarioperfil.show');
-
-Route::get('/funcionarioperfil/{id}/edit', [PerfilFuncionarioController::class, 'edit'])->name('funcionarioperfil.edit');
-
-Route::put('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'update'])->name('funcionarioperfil.update');
-
-Route::delete('/funcionarioperfil/{id}', [PerfilFuncionarioController::class, 'destroy'])->name('funcionarioperfil.destroy');
+Route::prefix('funcionarioperfil')->name('funcionarioperfil.')->group(function () {
+    Route::get('/{id}/cadastro', [PerfilFuncionarioController::class, 'create'])->name('create');
+    Route::post('/{id}', [PerfilFuncionarioController::class, 'store'])->name('store');
+    Route::get('/{id}', [PerfilFuncionarioController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PerfilFuncionarioController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PerfilFuncionarioController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PerfilFuncionarioController::class, 'destroy'])->name('destroy');
+});
 
