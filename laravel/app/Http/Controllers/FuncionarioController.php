@@ -11,8 +11,6 @@ class FuncionarioController extends Controller
 {
     public function create()
     {
-        // $a = DB::table('funcionario')->get()->toJson();
-        // dump($a);
         return view('funcionario.create');
     }
 
@@ -73,7 +71,6 @@ class FuncionarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validação dos dados do formulário
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
@@ -85,7 +82,6 @@ class FuncionarioController extends Controller
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
 
-        // Query SQL para atualizar os dados do funcionário
         $sql = "UPDATE funcionario SET nome = ?, cargo = ?, salario = ?, updated_at = ? WHERE id = ?";
         
         DB::update($sql, [
@@ -96,7 +92,6 @@ class FuncionarioController extends Controller
             $id,
         ]);
 
-        // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
         return redirect()->route('funcionario.index', ['id' => $id])->with('success', 'Funcionário atualizado com sucesso!');
     }
 

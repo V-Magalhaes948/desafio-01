@@ -3,17 +3,17 @@
     <div class="container mt-5">
         <h2 class="mb-4">Atualizar Funcionário</h2>
 
-        <!-- Alerta de Erro -->
+        
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
 
-        <!-- Formulário de Cadastro de Funcionário -->
+        
         <form action="{{ route('funcionario.update', $funcionario->id) }}" method="post">
             @csrf
-            @method('PUT') <!-- Adiciona o método PUT para o formulário -->
+            @method('PUT') 
 
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome</label>

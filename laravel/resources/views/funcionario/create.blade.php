@@ -1,6 +1,5 @@
 @include('funcionario.header')
 
-    <!-- Formulário de Cadastro de Funcionário -->
     <div class="container mt-5">
         <div class="card">
             <div class="card-header bg-primary text-white">

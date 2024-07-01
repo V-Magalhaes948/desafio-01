@@ -12,12 +12,6 @@ class PerfilFuncionarioController extends Controller
 {
     public function create($funcionarioId)
     {
-        // $a = DB::table('perfil_funcionario')->get()->toJson();
-        // dump($a);
-        // $funcionario = Funcionario::find($funcionarioId);
-        // if(!$funcionario) {
-        //     return redirect()->back()->withErrors('Funcionário não encontrado.');
-        // }
         return view('perfilFuncionario.create', [
             'funcionarioId' => $funcionarioId
         ]);
@@ -57,20 +51,13 @@ class PerfilFuncionarioController extends Controller
             now(),
         ]);
 
-        // Redireciona de volta para o formulário com uma mensagem de sucesso
         return redirect()->route('funcionarioperfil.show', $funcionarioId)
                 ->with('success', 'Funcionário cadastrado com sucesso!');
     }
 
     public function show(Request $request, $funcionarioId)
     {
-        // Verifica se funcionário existe (alert)
-        // if (!$funcionarioId) {
-        //     return response()->json([
-        //         'menssage:' => 'Funcionário não existente.'. $id
-        //     ]);
-        // }
-
+      
         $sql = "SELECT * FROM perfil_funcionario WHERE funcionario_id = ?";
 
         $confirmaPerfilFuncionario = DB::select($sql, [
@@ -138,7 +125,6 @@ class PerfilFuncionarioController extends Controller
             $funcionarioId,
         ]);
 
-        // Redireciona de volta para a página do funcionário ou retorna uma mensagem de sucesso
         return redirect()->route('funcionarioperfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
     }
     public function destroy($funcionarioId)
