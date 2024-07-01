@@ -29,13 +29,10 @@ class PerfilFuncionarioController extends Controller
             ->with('message', 'Erro de validação: Funcionário não existe');
 
         }
-        $validator = Validator::make($request->all(), [
-            'idade' => 'required|integer|min:1',
-            'endereco' => 'required|string|max:120',
-            'telefone' => 'required|string|min:1',
-        ]);
 
-        if ($validator->fails()) {
+        $validated = $this->validaCamposPerfilFuncionario($request);
+
+        if ($validated->fails()) {
             return redirect()->route('funcionarioperfil.create', $funcionarioId)
             ->with('error', 'Erro de validação: Preencha os campos de forma correta');
         }
@@ -104,13 +101,9 @@ class PerfilFuncionarioController extends Controller
 
     public function update(Request $request, $funcionarioId) 
     {
-        $validator = Validator::make($request->all(), [
-            'idade' => 'required|integer|min:1',
-            'endereco' => 'required|string|max:120',
-            'telefone' => 'required|string|min:1',
-        ]);
+        $validated = $this->validaCamposPerfilFuncionario($request);
 
-        if ($validator->fails()) {
+        if ($validated->fails()) {
             return redirect()->route('funcionarioperfil.edit', $funcionarioId)
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
@@ -127,6 +120,7 @@ class PerfilFuncionarioController extends Controller
 
         return redirect()->route('funcionarioperfil.show', [$funcionarioId])->with('success', 'Funcionário atualizado com sucesso!');
     }
+
     public function destroy($funcionarioId)
     {
         $sql = "DELETE FROM perfil_funcionario WHERE funcionario_id = ?";
@@ -135,6 +129,15 @@ class PerfilFuncionarioController extends Controller
 
         return response()->json([
             'menssage' => 'Perfil do funcionário excluído com sucesso!'. $funcionarioId
+        ]);
+    }
+
+    private function validaCamposPerfilFuncionario(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'idade' => 'required|integer|min:1',
+            'endereco' => 'required|string|max:120',
+            'telefone' => 'required|string|min:1',
         ]);
     }
 

@@ -16,11 +16,11 @@ class FuncionarioController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'salario' => 'required|numeric|min:0',
-        ]);
+        $validated = $this->validaCamposFuncionario($request);
+
+        if ($validated->fails()) {
+            return response()->json(['message' => 'Erro de validação: Preencha todos os campos corretamente'], 422);
+        }
 
         try {
             $sql = "INSERT INTO funcionario (nome, cargo, salario, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
@@ -71,13 +71,9 @@ class FuncionarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'salario' => 'required|numeric|min:0',
-        ]);
+        $validated = $this->validaCamposFuncionario($request);
 
-        if ($validator->fails()) {
+        if ($validated->fails()) {
             return redirect()->route('funcionario.edit', $id)
             ->with('error', 'Erro de validação: Altere um campo ou não deixe-o o vazio.');
         }
@@ -107,6 +103,15 @@ class FuncionarioController extends Controller
 
         return response()->json([
             'menssage' => 'Funcionário e Perfil excluídos com sucesso!'. $id
+        ]);
+    }
+
+    private function validaCamposFuncionario(Request $request)
+    {
+        return Validator::make($request->all(), [
+            'nome' => 'required|string|max:255',
+            'cargo' => 'required|string|max:255',
+            'salario' => 'required|numeric|min:0',
         ]);
     }
 }
