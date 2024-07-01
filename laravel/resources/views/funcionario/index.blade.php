@@ -1,26 +1,36 @@
 @include('funcionario.header')
 
-    <div>
-        <a href="{{ route('funcionario.create') }}">CADASTRAR FUNCIONÁRIO</a>
-    </div>
+<div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Lista de Funcionários</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <a href="{{ route('funcionario.create') }}" class="btn btn-success">CADASTRAR FUNCIONÁRIO</a>
+                </div>
 
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <table id="listagem" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOME</th>
+                            <th>CARGO</th>
+                            <th>SALÁRIO</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
-    @endif
-
-    <table id="listagem">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>NOME</th>
-                <th>CARGO</th>
-                <th>SALÁRIO</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    </div>
 
     <script>
         $(document).ready(function() {
@@ -36,17 +46,9 @@
                     type: 'GET',
                     success: function(response) {
                         console.log(response);
-                        //Receber response
-                        //Fazer loop para cada item do response
-                        //Criar elemento html tr 
-                        //Fazer loop para cada coluna (id, nome, cargo, salário)
-                        //Criar elemento html td e fazer append na tr
-                        //Localizar o tbody dentro da table e fazer o append da tr no tbody
-                        // Limpa a tabela
                         let tbody = $('#listagem tbody');
                         tbody.empty();
 
-                        // Adiciona cada linha na tabela
                         $.each(response, function(index, item) {
                             let urlEdit = "{{ route("funcionario.edit", "xx") }}";
                             let urlShowPerfil = "{{ route("funcionarioperfil.show", "xx") }}";
@@ -58,9 +60,11 @@
                                     <td>${item.nome}</td>
                                     <td>${item.cargo}</td>
                                     <td>${item.salario}</td>
-                                    <td><a href="${pageShowPerfil}">PERFIL</a></td>
-                                    <td><a href="${pageEdit}">EDITAR</a></td>
-                                    <td><a class="delete" data-id="${item.id}">EXCLUIR</a></td>
+                                    <td>
+                                        <a href="${pageShowPerfil}" class="btn btn-info btn-sm">PERFIL</a>
+                                        <a href="${pageEdit}" class="btn btn-warning btn-sm">EDITAR</a>
+                                        <a href="#" class="btn btn-danger btn-sm delete" data-id="${item.id}">EXCLUIR</a>
+                                    </td>
                                 </tr>
                             `);
                         });
